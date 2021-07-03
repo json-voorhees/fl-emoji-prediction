@@ -24,6 +24,7 @@ import {
   MenuItem,
 } from '@chakra-ui/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 const data = [
   {
