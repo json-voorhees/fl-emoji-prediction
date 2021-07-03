@@ -36,6 +36,8 @@ import {
   Th,
   Tbody,
   Td,
+  Select,
+  HStack,
 } from '@chakra-ui/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ChevronDownIcon } from '@chakra-ui/icons';
@@ -252,35 +254,25 @@ function App() {
             <TabPanels>
               <TabPanel>
                 <Center mx={20} my={10} p={10}>
-                  <Grid maxW="50%" templateColumns="repeat(2, 1fr)" gap={4} w="100%">
-                    <GridItem colSpan={1}>
-                      <Center>
-                        <Menu>
-                          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                            Model
-  </MenuButton>
-                          <MenuList>
-                            <MenuItem>StandAlone</MenuItem>
-                            <MenuItem>PerFedAvg</MenuItem>
-                            <MenuItem>HeteroFL</MenuItem>
-                            <MenuItem>HetPerFedAvg</MenuItem>
-                          </MenuList>
-                        </Menu>
-                      </Center>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                      <Center>
-                        <RadioGroup defaultValue="1">
-                          <Stack w="100%" p={10} spacing={4}>
-                            <Radio value="1">
-                              Load pretrained
+                  <Box maxW="60%" templateColumns="repeat(2, 1fr)" gap={4} w="100%">
+                    <HStack spacing={5}>
+                      <Select placeholder="Model" size="lg">
+                        <option value="StandAlone">StandAlone</option>
+                        <option value="PerFedAvg">PerFedAvg</option>
+                        <option value="HeteroFL">HeteroFL</option>
+                        <option value="HetPerFedAvg">HetPerFedAvg</option>
+                      </Select>
+                      <RadioGroup defaultValue="1" w="200px">
+                        <Stack spacing={2}>
+                          <Radio value="1">
+                            Load pretrained
                 </Radio>
-                            <Radio value="2">Scratch train</Radio>
-                          </Stack>
-                        </RadioGroup>
-                      </Center>
-                    </GridItem>
-                  </Grid>
+                          <Radio value="2">Scratch train</Radio>
+                        </Stack>
+                      </RadioGroup>
+                    </HStack>
+
+                  </Box>
                 </Center>
               </TabPanel>
             </TabPanels>
