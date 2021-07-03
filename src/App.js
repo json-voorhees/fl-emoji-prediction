@@ -22,6 +22,20 @@ import {
   Menu,
   MenuList,
   MenuItem,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
 } from '@chakra-ui/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ChevronDownIcon } from '@chakra-ui/icons';
@@ -68,6 +82,114 @@ const data = [
     probability: 2,
   },
 ];
+const exploreData = [
+  {
+    name: '🐻',
+    count: 254,
+  },
+  {
+    name: '😗',
+    count: 213,
+  },
+  {
+    name: '😎',
+    count: 198,
+  },
+  {
+    name: '👍',
+    count: 639,
+  },
+  {
+    name: '👀',
+    count: 418,
+  },
+  {
+    name: '😁',
+    count: 328,
+  },
+  {
+    name: '🥲',
+    count: 543,
+  },
+  {
+    name: '😉',
+    count: 244,
+  },
+  {
+    name: '😛',
+    count: 111,
+  },
+  {
+    name: '🤓',
+    count: 2,
+  },
+]
+function StatBody() {
+  return (
+    <Table variant="simple">
+      <Thead>
+        <Tr>
+          <Th>Tweet</Th>
+          <Th>Emotion</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td>Pùn</Td>
+          <Td>🥲</Td>
+        </Tr>
+        <Tr>
+          <Td>Rất zui</Td>
+          <Td>🤣</Td>
+        </Tr>
+        <Tr>
+          <Td>Thiên thần</Td>
+          <Td>😇</Td>
+        </Tr>
+      </Tbody>
+    </Table>
+  )
+}
+
+function ExploreBody() {
+  return (
+    <BarChart
+      width={500}
+      height={450}
+      data={exploreData}
+      margin={{
+        top: 5,
+        bottom: 5,
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Bar dataKey="count" fill="#8884d8" />
+    </BarChart>
+  )
+}
+
+function DataModal({ showModalButtonText, modalHeader, modalBody }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button colorScheme="teal" variant="solid" onClick={onOpen}>
+        {showModalButtonText}
+      </Button>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{modalHeader}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{modalBody}</ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  )
+}
 
 function App() {
   return (
@@ -84,27 +206,13 @@ function App() {
             <Box h="400px" w="100%" bg="white" overflowY="scroll" border="1px" borderRadius="2px" borderColor="gray.200">
               <RadioGroup defaultValue="1">
                 <Stack w="100%" p={10} spacing={4}>
-                  <Radio value="1">
-                    USER 1
-                </Radio>
-                  <Radio value="2">USER 2</Radio>
-                  <Radio value="3">USER 3</Radio>
-                  <Radio value="4">USER 4</Radio>
-                  <Radio value="5">USER 5</Radio>
-                  <Radio value="6">USER 5</Radio>
-                  <Radio value="7">USER 5</Radio>
-                  <Radio value="8">USER 5</Radio>
-                  <Radio value="9">USER 5</Radio>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(x => <Radio value={x.toString()}>USER {x}</Radio>)}
                 </Stack>
               </RadioGroup>
             </Box>
             <Stack direction="row" spacing={8} marginTop={3}>
-              <Button colorScheme="teal" variant="solid">
-                Stats
-              </Button>
-              <Button colorScheme="teal" variant="solid">
-                Explore
-              </Button>
+              <DataModal showModalButtonText="Stats" modalHeader="Stats" modalBody={StatBody()} />
+              <DataModal showModalButtonText="Explore" modalHeader="Explore" modalBody={ExploreBody()} />
             </Stack>
           </Center>
         </GridItem>
