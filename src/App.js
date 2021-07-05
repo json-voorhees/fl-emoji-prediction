@@ -203,7 +203,7 @@ function DataModal({ showModalButtonText, modalHeader, modalBody }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button colorScheme="teal" variant="solid" onClick={onOpen}>
+      <Button colorScheme="twitter" variant="solid" onClick={onOpen}>
         {showModalButtonText}
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
@@ -228,42 +228,41 @@ function App() {
         my={0}
         mx={40}
         gap={4}
+        colorScheme="twitter"
       >
         <GridItem colSpan={8} rowSpan={1}>
-          <Tabs align="end" variant="line">
-            <TabList>
-              <Tab>Federated settings</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Center mx={10} my={10} p={5}>
-                  <Box>
-                    <HStack spacing={20}>
-                      <FormControl id="algorithm">
-                        <FormLabel>Algorithm</FormLabel>
-                        <Select placeholder="Select algorithm">
-                          <option value="StandAlone">StandAlone</option>
-                          <option value="PerFedAvg">PerFedAvg</option>
-                          <option value="HeteroFL">HeteroFL</option>
-                          <option value="HetPerFedAvg">HetPerFedAvg</option>
-                        </Select>
-                      </FormControl>
-                      <FormControl id="technique">
-                        <FormLabel>Techniques</FormLabel>
-                        <CheckboxGroup size="lg" colorScheme="teal" defaultValue={["masking", "technique2"]}>
-                          <HStack spacing={5} whiteSpace="nowrap">
-                            <Checkbox value="masking">Masking</Checkbox>
-                            <Checkbox value="technique1">Technique 1</Checkbox>
-                            <Checkbox value="technique2">Technique 2</Checkbox>
-                          </HStack>
-                        </CheckboxGroup>
-                      </FormControl>
+          <Center mx={10} my={10} p={5}>
+            <Box>
+              <HStack spacing={20}>
+                <FormControl id="algorithm">
+                  <FormLabel>Algorithm</FormLabel>
+                  <Select placeholder="Select algorithm">
+                    <option value="StandAlone">StandAlone</option>
+                    <option value="PerFedAvg">PerFedAvg</option>
+                    <option value="HeteroFL">HeteroFL</option>
+                    <option value="HetPerFedAvg">HetPerFedAvg</option>
+                  </Select>
+                </FormControl>
+                <FormControl id="technique">
+                  <FormLabel>Techniques</FormLabel>
+                  <CheckboxGroup size="lg" colorScheme="twitter" defaultValue={["masking", "adaptEval"]}>
+                    <HStack spacing={5} whiteSpace="nowrap">
+                      <Checkbox value="masking">Masking</Checkbox>
+                      <Checkbox value="adaptEval">Adapt Eval</Checkbox>
                     </HStack>
-                  </Box>
-                </Center>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+                  </CheckboxGroup>
+                </FormControl>
+                <FormControl id="weighting">
+                  <FormLabel>Weighting</FormLabel>
+                  <Select placeholder="Select weighting">
+                    <option value="inverseWeighting">Inverse Weighting</option>
+                    <option value="smoothInverseWeighting">Smooth Inverse Weighting</option>
+                    <option value="effectiveNumber">Effecitive Number</option>
+                  </Select>
+                </FormControl>
+              </HStack>
+            </Box>
+          </Center>
         </GridItem>
         <GridItem colSpan={2} rowSpan={5}>
           <Center my={10} mx={10} flexDirection="column">
@@ -283,9 +282,9 @@ function App() {
         </GridItem>
         <GridItem colSpan={6} rowSpan={5}>
           <VStack my={10} mx={10} spacing={20}>
-            <VStack  w="80%" alignItems="flex-end">
-            <Textarea placeholder="What're you thinking?"/>
-            <Button colorScheme="teal" variant="solid">Predict</Button>
+            <VStack w="80%" alignItems="flex-end">
+              <Textarea placeholder="What're you thinking?" />
+              <Button colorScheme="twitter" variant="solid">Predict</Button>
             </VStack>
             <ResponsiveContainer width="100%" height={450}>
               <BarChart
