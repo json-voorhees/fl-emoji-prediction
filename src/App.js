@@ -38,6 +38,11 @@ import {
   Td,
   Select,
   HStack,
+  Textarea,
+  CheckboxGroup,
+  Checkbox,
+  FormControl,
+  FormLabel,
 } from '@chakra-ui/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ChevronDownIcon } from '@chakra-ui/icons';
@@ -125,6 +130,26 @@ const exploreData = [
     name: '🤓',
     count: 2,
   },
+  {
+    name: '😋',
+    count: 25,
+  },
+  {
+    name: '😝',
+    count: 22,
+  },
+  {
+    name: '😕',
+    count: 52,
+  },
+  {
+    name: '😤',
+    count: 42,
+  },
+  {
+    name: '😡',
+    count: 22,
+  },
 ]
 function StatBody() {
   return (
@@ -132,21 +157,21 @@ function StatBody() {
       <Thead>
         <Tr>
           <Th>Tweet</Th>
-          <Th>Emotion</Th>
+          <Th isNumeric>Emoji</Th>
         </Tr>
       </Thead>
       <Tbody>
         <Tr>
           <Td>Pùn</Td>
-          <Td>🥲</Td>
+          <Td isNumeric>🥲</Td>
         </Tr>
         <Tr>
           <Td>Rất zui</Td>
-          <Td>🤣</Td>
+          <Td isNumeric>🤣</Td>
         </Tr>
         <Tr>
           <Td>Thiên thần</Td>
-          <Td>😇</Td>
+          <Td isNumeric>😇</Td>
         </Tr>
       </Tbody>
     </Table>
@@ -198,12 +223,50 @@ function App() {
     <ChakraProvider theme={theme}>
       <Grid
         h="100vh"
-        templateRows="repeat(5, 1fr)"
+        templateRows="repeat(6, 1fr)"
         templateColumns="repeat(8, 1fr)"
+        my={0}
+        mx={40}
         gap={4}
       >
-        <GridItem colSpan={2} rowSpan={2}>
-          <Center my={20} mx={10} flexDirection="column">
+        <GridItem colSpan={8} rowSpan={1}>
+          <Tabs align="end" variant="line">
+            <TabList>
+              <Tab>Federated settings</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Center mx={10} my={10} p={5}>
+                  <Box>
+                    <HStack spacing={20}>
+                      <FormControl id="algorithm">
+                        <FormLabel>Algorithm</FormLabel>
+                        <Select placeholder="Select algorithm">
+                          <option value="StandAlone">StandAlone</option>
+                          <option value="PerFedAvg">PerFedAvg</option>
+                          <option value="HeteroFL">HeteroFL</option>
+                          <option value="HetPerFedAvg">HetPerFedAvg</option>
+                        </Select>
+                      </FormControl>
+                      <FormControl id="technique">
+                        <FormLabel>Techniques</FormLabel>
+                        <CheckboxGroup size="lg" colorScheme="teal" defaultValue={["masking", "technique2"]}>
+                          <HStack spacing={5} whiteSpace="nowrap">
+                            <Checkbox value="masking">Masking</Checkbox>
+                            <Checkbox value="technique1">Technique 1</Checkbox>
+                            <Checkbox value="technique2">Technique 2</Checkbox>
+                          </HStack>
+                        </CheckboxGroup>
+                      </FormControl>
+                    </HStack>
+                  </Box>
+                </Center>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </GridItem>
+        <GridItem colSpan={2} rowSpan={5}>
+          <Center my={10} mx={10} flexDirection="column">
             <Heading as="h4" size="md" marginBottom={3}>User list</Heading>
             <Box h="400px" w="100%" bg="white" overflowY="scroll" border="1px" borderRadius="2px" borderColor="gray.200">
               <RadioGroup defaultValue="1">
@@ -218,12 +281,12 @@ function App() {
             </Stack>
           </Center>
         </GridItem>
-        <GridItem colSpan={6} rowSpan={3}>
-          <VStack my={20} mx={10} spacing={4}>
-            <Stack direction="row" w="100%">
-              <Input placeholder="Input the sentence" />
-              <Button colorScheme="teal" variant="solid">Predict</Button>
-            </Stack>
+        <GridItem colSpan={6} rowSpan={5}>
+          <VStack my={10} mx={10} spacing={20}>
+            <VStack  w="80%" alignItems="flex-end">
+            <Textarea placeholder="What're you thinking?"/>
+            <Button colorScheme="teal" variant="solid">Predict</Button>
+            </VStack>
             <ResponsiveContainer width="100%" height={450}>
               <BarChart
                 width={900}
@@ -245,38 +308,6 @@ function App() {
               </BarChart>
             </ResponsiveContainer>
           </VStack>
-        </GridItem>
-        <GridItem colSpan={8} rowSpan={2}>
-          <Tabs align="end" variant="enclosed">
-            <TabList>
-              <Tab>Federated settings</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Center mx={20} my={10} p={10}>
-                  <Box maxW="60%" templateColumns="repeat(2, 1fr)" gap={4} w="100%">
-                    <HStack spacing={5}>
-                      <Select placeholder="Model" size="lg">
-                        <option value="StandAlone">StandAlone</option>
-                        <option value="PerFedAvg">PerFedAvg</option>
-                        <option value="HeteroFL">HeteroFL</option>
-                        <option value="HetPerFedAvg">HetPerFedAvg</option>
-                      </Select>
-                      <RadioGroup defaultValue="1" w="200px">
-                        <Stack spacing={2}>
-                          <Radio value="1">
-                            Load pretrained
-                </Radio>
-                          <Radio value="2">Scratch train</Radio>
-                        </Stack>
-                      </RadioGroup>
-                    </HStack>
-
-                  </Box>
-                </Center>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
         </GridItem>
       </Grid>
     </ChakraProvider>
