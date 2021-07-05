@@ -236,7 +236,7 @@ function App() {
               <HStack spacing={20}>
                 <FormControl id="algorithm">
                   <FormLabel>Algorithm</FormLabel>
-                  <Select placeholder="Select algorithm">
+                  <Select>
                     <option value="StandAlone">StandAlone</option>
                     <option value="PerFedAvg">PerFedAvg</option>
                     <option value="HeteroFL">HeteroFL</option>
@@ -254,7 +254,8 @@ function App() {
                 </FormControl>
                 <FormControl id="weighting">
                   <FormLabel>Weighting</FormLabel>
-                  <Select placeholder="Select weighting">
+                  <Select>
+                    <option value="inverseWeighting">Uniform Weighting</option>
                     <option value="inverseWeighting">Inverse Weighting</option>
                     <option value="smoothInverseWeighting">Smooth Inverse Weighting</option>
                     <option value="effectiveNumber">Effecitive Number</option>
@@ -300,7 +301,7 @@ function App() {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" label={{ value: 'Emojis', position: 'insideBottomRight', offset: -5 }} />
-                <YAxis label={{ value: 'probability', angle: -90, position: 'insideLeft' }}/>
+                <YAxis label={{ value: 'probability', angle: -90, position: 'insideLeft' }} />
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="probability" fill="#8884d8" />
@@ -309,7 +310,7 @@ function App() {
           </VStack>
         </GridItem>
       </Grid>
-    </ChakraProvider>
+    </ChakraProvider >
   );
 }
 
