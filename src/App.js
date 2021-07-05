@@ -286,21 +286,21 @@ function App() {
               <Textarea placeholder="What're you thinking?" />
               <Button colorScheme="twitter" variant="solid">Predict</Button>
             </VStack>
-            <ResponsiveContainer width="100%" height={450}>
+            <ResponsiveContainer width="80%" height={450}>
               <BarChart
                 width={900}
                 height={450}
                 data={data}
                 margin={{
                   top: 5,
-                  right: 30,
-                  left: 20,
+                  right: 5,
+                  left: 0,
                   bottom: 5,
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="name" label={{ value: 'Emojis', position: 'insideBottomRight', offset: -5 }} />
+                <YAxis label={{ value: 'probability', angle: -90, position: 'insideLeft' }}/>
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="probability" fill="#8884d8" />
