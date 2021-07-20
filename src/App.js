@@ -206,7 +206,9 @@ function DataModal({ showModalButtonText, modalHeader, modalBody }) {
 }
 
 function App({apiUrl}) {
-  console.log("apiUrl",apiUrl);
+  if(!apiUrl) {
+    return <h3>Please refresh and input the API Url</h3>
+  }
   return (
     <ChakraProvider theme={theme}>
       <Grid
