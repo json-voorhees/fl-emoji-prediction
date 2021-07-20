@@ -10,18 +10,8 @@ import {
   RadioGroup,
   Heading,
   Radio,
-  Input,
   theme,
   VStack,
-  Tabs,
-  Tab,
-  TabList,
-  TabPanels,
-  TabPanel,
-  MenuButton,
-  Menu,
-  MenuList,
-  MenuItem,
   useDisclosure,
   Modal,
   ModalOverlay,
@@ -29,7 +19,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   Table,
   Thead,
   Tr,
@@ -45,8 +34,6 @@ import {
   FormLabel,
 } from '@chakra-ui/react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { ChevronDownIcon } from '@chakra-ui/icons';
-
 const data = [
   {
     name: '🐻',
@@ -218,7 +205,8 @@ function DataModal({ showModalButtonText, modalHeader, modalBody }) {
   )
 }
 
-function App() {
+function App({apiUrl}) {
+  console.log("apiUrl",apiUrl);
   return (
     <ChakraProvider theme={theme}>
       <Grid
@@ -231,38 +219,31 @@ function App() {
         colorScheme="twitter"
       >
         <GridItem colSpan={8} rowSpan={1}>
-          <Center mx={10} my={10} p={5}>
-            <Box>
-              <HStack spacing={20}>
+          <Center mx={10} my={10} p={5} borderBottom="1px solid">
+            <HStack spacing={20}>
+              <HStack spacing={10}>
+                <FormControl id="dataType">
+                  <FormLabel>Data Type</FormLabel>
+                  <Select>
+                    <option value="IID">IID</option>
+                    <option value="NonIID">NonIID</option>
+                    <option value="Centralized">Centralized</option>
+                  </Select>
+                </FormControl>
                 <FormControl id="algorithm">
                   <FormLabel>Algorithm</FormLabel>
                   <Select>
-                    <option value="StandAlone">StandAlone</option>
-                    <option value="PerFedAvg">PerFedAvg</option>
-                    <option value="HeteroFL">HeteroFL</option>
-                    <option value="HetPerFedAvg">HetPerFedAvg</option>
-                  </Select>
-                </FormControl>
-                <FormControl id="technique">
-                  <FormLabel>Techniques</FormLabel>
-                  <CheckboxGroup size="lg" colorScheme="twitter" defaultValue={["masking", "adaptEval"]}>
-                    <HStack spacing={5} whiteSpace="nowrap">
-                      <Checkbox value="masking">Masking</Checkbox>
-                      <Checkbox value="adaptEval">Adapt Eval</Checkbox>
-                    </HStack>
-                  </CheckboxGroup>
-                </FormControl>
-                <FormControl id="weighting">
-                  <FormLabel>Weighting</FormLabel>
-                  <Select>
-                    <option value="inverseWeighting">Uniform Weighting</option>
-                    <option value="inverseWeighting">Inverse Weighting</option>
-                    <option value="smoothInverseWeighting">Smooth Inverse Weighting</option>
-                    <option value="effectiveNumber">Effecitive Number</option>
+                    <option value="Centralized">Centralized</option>
+                    <option value="HetFedAvg">Het-FedAvg</option>
+                    <option value="HetPerFedAvg">HetPer-FedAvg</option>
                   </Select>
                 </FormControl>
               </HStack>
-            </Box>
+              <FormControl id="apply" w="unset">
+                <FormLabel opacity={0}>{"lb"}</FormLabel>
+                  <Button colorScheme="twitter">Apply</Button>
+                </FormControl>
+            </HStack>
           </Center>
         </GridItem>
         <GridItem colSpan={2} rowSpan={5}>

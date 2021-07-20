@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
-
+const apiUrl = prompt("Enter the API URL")
 ReactDOM.render(
   <StrictMode>
     <ColorModeScript />
-    <App />
+    <App apiUrl={apiUrl}/>
   </StrictMode>,
   document.getElementById('root')
 );
