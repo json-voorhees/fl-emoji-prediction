@@ -32,7 +32,10 @@ import {
   Checkbox,
   FormControl,
   FormLabel,
+  Tag,
 } from '@chakra-ui/react';
+import Settings from './Settings';
+
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 const data = [
   {
@@ -164,7 +167,20 @@ function StatBody() {
     </Table>
   )
 }
+const applySettings = (dataType, algorithm) => {
+  console.log("dataType", dataType)
+  console.log("algorithm", algorithm)
+}
 
+let rgb2hex = (r, g, b) => "#" + [r, g, b].map(x => Math.round(x * 255).toString(16).padStart(2, 0)).join('');
+let hsl2rgb = (h, s, l) => {
+  let a = s * Math.min(l, 1 - l);
+  let f = (n, k = (n + h / 30) % 12) => l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+  return [f(0), f(8), f(4)];
+}
+let prob2hex = (prob) => {
+  return rgb2hex(...hsl2rgb(203, 0.88, prob / 100))
+}
 function ExploreBody() {
   return (
     <BarChart
@@ -205,8 +221,8 @@ function DataModal({ showModalButtonText, modalHeader, modalBody }) {
   )
 }
 
-function App({apiUrl}) {
-  if(!apiUrl) {
+function App({ apiUrl }) {
+  if (!apiUrl) {
     return <h3>Please refresh and input the API Url</h3>
   }
   return (
@@ -221,32 +237,7 @@ function App({apiUrl}) {
         colorScheme="twitter"
       >
         <GridItem colSpan={8} rowSpan={1}>
-          <Center mx={10} my={10} p={5} borderBottom="1px solid">
-            <HStack spacing={20}>
-              <HStack spacing={10}>
-                <FormControl id="dataType">
-                  <FormLabel>Data Type</FormLabel>
-                  <Select>
-                    <option value="IID">IID</option>
-                    <option value="NonIID">NonIID</option>
-                    <option value="Centralized">Centralized</option>
-                  </Select>
-                </FormControl>
-                <FormControl id="algorithm">
-                  <FormLabel>Algorithm</FormLabel>
-                  <Select>
-                    <option value="Centralized">Centralized</option>
-                    <option value="HetFedAvg">Het-FedAvg</option>
-                    <option value="HetPerFedAvg">HetPer-FedAvg</option>
-                  </Select>
-                </FormControl>
-              </HStack>
-              <FormControl id="apply" w="unset">
-                <FormLabel opacity={0}>{"lb"}</FormLabel>
-                  <Button colorScheme="twitter">Apply</Button>
-                </FormControl>
-            </HStack>
-          </Center>
+          <Settings applySetting={applySettings} />
         </GridItem>
         <GridItem colSpan={2} rowSpan={5}>
           <Center my={10} mx={10} flexDirection="column">
@@ -265,11 +256,19 @@ function App({apiUrl}) {
           </Center>
         </GridItem>
         <GridItem colSpan={6} rowSpan={5}>
-          <VStack my={10} mx={10} spacing={20}>
+          <VStack my={10} mx={10} spacing={10}>
             <VStack w="80%" alignItems="flex-end">
               <Textarea placeholder="What're you thinking?" />
               <Button colorScheme="twitter" variant="solid">Predict</Button>
             </VStack>
+            <HStack alignItems="flex-start" paddingBottom={10}>
+              {
+                [{ word: "I", value: 90 }, { word: "love", value: 29 }, { word: "Java", value: 39 }, { word: "script", value: 9 }]
+                  .map(({ word, value }) => (<Tag size="lg" variant="solid" backgroundColor={prob2hex(100 - value)}>
+                    {word}
+                  </Tag>))
+              }
+            </HStack>
             <ResponsiveContainer width="80%" height={450}>
               <BarChart
                 width={900}
